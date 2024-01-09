@@ -5,18 +5,21 @@ import java.util.List;
 
 public class Flight {
     private int id;
-    private String from;
-    private String to;
+    private String from_loc;
+    private String to_loc;
     private LocalDate from_date;
     private LocalDate to_date;
-    private List<Order> orders;
+    private int max_seats;
+    private int orders;
 
-    public Flight(int id, String from, String to, LocalDate from_date, LocalDate to_date) {
+    public Flight(int id, String from_loc, String to_loc, LocalDate from_date, LocalDate to_date, int max_seats, int orders) {
         this.id = id;
-        this.from = from;
-        this.to = to;
+        this.from_loc = from_loc;
+        this.to_loc = to_loc;
         this.from_date = from_date;
         this.to_date = to_date;
+        this.max_seats = max_seats;
+        this.orders = orders;
     }
 
     public int getId() {
@@ -27,20 +30,20 @@ public class Flight {
         this.id = id;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFrom_loc() {
+        return from_loc;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFrom_loc(String from_loc) {
+        this.from_loc = from_loc;
     }
 
-    public String getTo() {
-        return to;
+    public String getTo_loc() {
+        return to_loc;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setTo_loc(String to_loc) {
+        this.to_loc = to_loc;
     }
 
     public LocalDate getFrom_date() {
@@ -59,12 +62,32 @@ public class Flight {
         this.to_date = to_date;
     }
 
-    public List<Order> getOrders() {
+    public int getMax_seats() {
+        return max_seats;
+    }
+
+    public void setMax_seats(int max_seats) {
+        this.max_seats = max_seats;
+    }
+
+    public int getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(int orders) {
         this.orders = orders;
     }
 
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", from_loc='" + from_loc + '\'' +
+                ", to_loc='" + to_loc + '\'' +
+                ", from_date=" + from_date +
+                ", to_date=" + to_date +
+                ", max_seats=" + max_seats +
+                ", orders=" + orders +
+                '}';
+    }
 }

@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
 
         System.out.println("List of Flights:");
         for (Flight flight : flights) {
-            System.out.println(flight);
+            System.out.println(flight.toString());
         }
     }
 
@@ -30,15 +30,23 @@ public class HelloApplication extends Application {
         stage.setMinWidth(500);
         stage.setMinHeight(500);
         stage.show();
-
-        // Load flights from the database
-        FlightDAO.updateFlightsFromDB();
+//
+//        // Load flights from the database
+//        FlightDAO.updateFlightsFromDB();
 
         // Display flights in the terminal
         displayFlights();
 
-        Optional<Flight> flight = FlightDAO.getFlight(1);
-        System.out.println(flight);
+        Optional<Flight> optionalFlight = FlightDAO.getFlight(1);
+        if (optionalFlight.isPresent()) {
+            Flight flight = optionalFlight.get();
+            flight.setOrders(flight.getOrders() + 2);
+            FlightDAO.updateFlight(flight);
+        } else {
+            System.out.println("No such objects");
+        }
+        FlightDAO.updateFlightsFromDB();
+        displayFlights();
     }
 
     public static void main(String[] args) {
