@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class Database {
 
-    private static final String URL = Objects.requireNonNull(HelloApplication.class.getResource("/database.db")).getPath();
+    private static final String URL = Objects.requireNonNull(HelloApplication.class.getResource("/db.db")).getPath();
 
     public static Connection connect() {
         String dbPrefix = "jdbc:sqlite:";

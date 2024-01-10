@@ -9,15 +9,17 @@ public class Flight {
     private String to_loc;
     private LocalDate from_date;
     private LocalDate to_date;
+    private int price;
     private int max_seats;
     private int orders;
 
-    public Flight(int id, String from_loc, String to_loc, LocalDate from_date, LocalDate to_date, int max_seats, int orders) {
+    public Flight(int id, String from_loc, String to_loc, LocalDate from_date, LocalDate to_date, int price, int max_seats, int orders) {
         this.id = id;
         this.from_loc = from_loc;
         this.to_loc = to_loc;
         this.from_date = from_date;
         this.to_date = to_date;
+        this.price = price;
         this.max_seats = max_seats;
         this.orders = orders;
     }
@@ -60,6 +62,14 @@ public class Flight {
 
     public void setTo_date(LocalDate to_date) {
         this.to_date = to_date;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getMax_seats() {
