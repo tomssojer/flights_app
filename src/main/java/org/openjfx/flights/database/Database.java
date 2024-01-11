@@ -1,6 +1,6 @@
-package org.openjfx.demo.database;
+package org.openjfx.flights.database;
 
-import org.openjfx.demo.HelloApplication;
+import org.openjfx.flights.Application;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class Database {
 
-    private static final String URL = Objects.requireNonNull(HelloApplication.class.getResource("/db.db")).getPath();
+    private static final String URL = Objects.requireNonNull(Application.class.getResource("/database.db")).getPath();
 
     public static Connection connect() {
         String dbPrefix = "jdbc:sqlite:";

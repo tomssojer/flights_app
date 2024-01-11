@@ -1,9 +1,9 @@
-package org.openjfx.demo.dao;
+package org.openjfx.flights.dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.openjfx.demo.database.Database;
-import org.openjfx.demo.models.Flight;
+import org.openjfx.flights.database.Database;
+import org.openjfx.flights.models.Flight;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -51,19 +51,25 @@ public class FlightDAO {
         return FXCollections.unmodifiableObservableList(flights);
     }
 
-    public static ObservableList<Flight> filterFlights(String from_loc, String to_loc, LocalDate from_date, LocalDate to_date, int seats) {
-        String query = "SELECT * FROM flights WHERE from_loc = ? AND to_loc = ? AND from_date = ? AND to_date = ?";
+    public static ObservableList<Flight> filterFlights(String from_loc, String to_loc, LocalDate from_date, LocalDate to_date) {
+        String query = "SELECT * FROM flights WHERE 1=1";
+
+        if (from_loc != null) query += " AND from_loc = ?";
+        if (to_loc != null) query += " AND to_loc = ?";
+        if (from_date != null) query += " AND from_date = ?";
+        if (to_date != null) query += " AND to_date = ?";
 
         ObservableList<Flight> searchResults = FXCollections.observableArrayList();
 
         try (Connection connection = Database.connect()) {
             assert connection != null;
-
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, from_loc);
-            statement.setString(2, to_loc);
-            statement.setString(3, from_date.toString());
-            statement.setString(4, to_date.toString());
+            int parameterIndex = 1;
+
+            if (from_loc != null) statement.setString(parameterIndex++, from_loc);
+            if (to_loc != null) statement.setString(parameterIndex++, to_loc);
+            if (from_date != null) statement.setString(parameterIndex++, from_date.toString());
+            if (to_date != null) statement.setString(parameterIndex, to_date.toString());
 
             ResultSet rs = statement.executeQuery();
 
@@ -106,7 +112,6 @@ public class FlightDAO {
                 flight.getId()
         );
 
-        System.out.println(rows);
         if (rows == 0)
             throw new IllegalStateException("Flight to be updated with id " + flight.getId() + " didn't exist in database");
 

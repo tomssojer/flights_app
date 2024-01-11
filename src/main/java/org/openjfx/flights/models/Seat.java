@@ -1,4 +1,4 @@
-package org.openjfx.demo.models;
+package org.openjfx.flights.models;
 
 public class Seat {
     private int id;

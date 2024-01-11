@@ -10,12 +10,14 @@ module org.openjfx.demo {
     requires eu.hansolo.tilesfx;
     requires org.hibernate.orm.core;
 
-    opens org.openjfx.demo to javafx.fxml;
-    exports org.openjfx.demo;
-    exports org.openjfx.demo.models;
-    opens org.openjfx.demo.models to javafx.fxml;
-    exports org.openjfx.demo.database;
-    opens org.openjfx.demo.database to javafx.fxml;
-    exports org.openjfx.demo.dao;
-    opens org.openjfx.demo.dao to javafx.fxml;
+    opens org.openjfx.flights to javafx.fxml;
+    exports org.openjfx.flights;
+    exports org.openjfx.flights.models;
+    opens org.openjfx.flights.models to javafx.fxml;
+    exports org.openjfx.flights.database;
+    opens org.openjfx.flights.database to javafx.fxml;
+    exports org.openjfx.flights.dao;
+    opens org.openjfx.flights.dao to javafx.fxml;
+    exports org.openjfx.flights.controllers;
+    opens org.openjfx.flights.controllers to javafx.fxml;
 }

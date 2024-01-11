@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.openjfx</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>flights</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>demo</name>
 
@@ -105,7 +105,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.openjfx.demo/org.openjfx.demo.HelloApplication</mainClass>
+                            <mainClass>org.openjfx.demo/org.openjfx.flights.Application</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

@@ -1,6 +1,6 @@
-package org.openjfx.demo.dao;
+package org.openjfx.flights.dao;
 
-import org.openjfx.demo.database.Database;
+import org.openjfx.flights.database.Database;
 
 import java.sql.*;
 import java.time.LocalDateTime;

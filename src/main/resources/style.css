@@ -1,3 +1,7 @@
 .button-reverse {
     -fx-background-radius: 100;
 }
+
+.flightAnchor:hover {
+    -fx-background-color: #34b4eb;
+}

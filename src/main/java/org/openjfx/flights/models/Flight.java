@@ -1,7 +1,6 @@
-package org.openjfx.demo.models;
+package org.openjfx.flights.models;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Flight {
     private int id;
