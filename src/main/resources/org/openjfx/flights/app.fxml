@@ -56,14 +56,28 @@
                         <Button fx:id="isciButton" contentDisplay="TOP" layoutX="269.0" layoutY="113.0" mnemonicParsing="false" onAction="#searchFlights" text="Išči lete" />
                         <ScrollPane layoutX="55.0" layoutY="159.0" prefHeight="393.0" prefWidth="498.0">
                            <content>
-                              <VBox fx:id="letiContainer" prefHeight="222.0" prefWidth="529.0" />
+                              <VBox fx:id="letiContainer" prefHeight="222.0" prefWidth="499.0" />
                            </content>
                         </ScrollPane>
+                        <VBox prefHeight="200.0" prefWidth="100.0" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Naročila" />
+          <Tab onSelectionChanged="#loadOrders" text="Naročila">
+              <AnchorPane>
+                  <children>
+                     <ScrollPane prefHeight="349.0" prefWidth="604.0">
+                       <content>
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                              <children>
+                                 <VBox fx:id="orderContainer" prefHeight="349.0" prefWidth="604.0" />
+                              </children>
+                           </AnchorPane>
+                       </content>
+                     </ScrollPane>
+                  </children></AnchorPane>
+          </Tab>
         </tabs>
       </TabPane>
    </children>

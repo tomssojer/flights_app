@@ -17,11 +17,6 @@ public class Application extends javafx.application.Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("app.fxml"));
         Parent root = fxmlLoader.load();
 
-        ObservableList<Order> orders = OrderDAO.getOrders();
-        for (Order order : orders) {
-            System.out.println(order.toString());
-        }
-
         Scene scene = new Scene(root, 640, 480);
         stage.setScene(scene);
         scene.getStylesheets().add("style.css");

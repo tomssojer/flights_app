@@ -94,5 +94,8 @@ public class ModalController {
                 razred,
                 food
         );
+
+        Stage stage = (Stage) rezervirajButton.getScene().getWindow();
+        stage.close();
     }
 }

@@ -1,6 +1,7 @@
 package org.openjfx.flights.controllers;
 
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,12 +9,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import org.hibernate.mapping.ValueVisitor;
 import org.openjfx.flights.dao.FlightDAO;
+import org.openjfx.flights.dao.OrderDAO;
 import org.openjfx.flights.models.Flight;
+import org.openjfx.flights.models.Order;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,6 +43,10 @@ public class Controller implements Initializable {
     private Button isciButton;
     @FXML
     private VBox letiContainer;
+    @FXML
+    private VBox orderContainer;
+
+
     private static final ListView<Flight> flightsListView = new ListView<>();
     private final String[] from_locations = {"Ljubljana", "Trst", "Benetke", "Zagreb", "Dunaj", "Munich"};
     private final String[] to_locations = {"Berlin", "Madrid", "Paris", "London", "Praga", "Rim", "Bern", "Varšava",
@@ -55,25 +64,14 @@ public class Controller implements Initializable {
 
         if (searchResults.isEmpty()) {
             Label noFlightsLabel = new Label();
-            noFlightsLabel.setText("Ni letov za izbrani filter");
+            noFlightsLabel.setText("Ni letov za izbrani filter.");
             letiContainer.getChildren().add(noFlightsLabel);
         } else {
-            System.out.println(searchResults.size());
             int count = 0;
             int limit = 20;
             for (Flight flight : searchResults) {
                 FlightContainerController flightContainerController = new FlightContainerController();
-                flightContainerController.addFlightContainer(
-                        letiContainer,
-                        flight.getId(),
-                        flight.getFrom_loc(),
-                        flight.getTo_loc(),
-                        flight.getFrom_date(),
-                        flight.getTo_date(),
-                        flight.getPrice(),
-                        flight.getMax_seats(),
-                        flight.getOrders()
-                );
+                flightContainerController.addFlightContainer(letiContainer, flight);
                 count++;
                 if (count >= limit) break;
             }
@@ -128,6 +126,25 @@ public class Controller implements Initializable {
             modalStage.showAndWait(); // This will wait for the modal to be closed
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception appropriately
+        }
+    }
+
+    public void loadOrders() {
+
+        if (orderContainer != null) orderContainer.getChildren().clear();
+        else System.out.println("Null");
+
+        ObservableList<Order> searchResults = OrderDAO.getOrders();
+
+        if (searchResults.isEmpty()) {
+            Label noOrdersLabel = new Label();
+            noOrdersLabel.setText("Ni še nobenih naročil.");
+            orderContainer.getChildren().add(noOrdersLabel);
+        } else {
+            for (Order order : searchResults) {
+                OrderController orderController = new OrderController();
+                orderController.addOrderContainer(orderContainer, order);
+            }
         }
     }
 

@@ -24,28 +24,35 @@ public class FlightContainerController {
     @FXML
     private AnchorPane flightAnchor;
 
-    public void initialize(int id, String from_loc, String to_loc, LocalDate from_date, LocalDate to_date, int price, int seats, int orders) {
-        flightLabel.setText("Let " + id);
-        dateLabel.setText("Datum " + from_date);
-        seatsLabel.setText("Prosta mesta " + (seats-orders));
-        priceLabel.setText("Cena " + price + " €");
+    public void initialize(Flight flight) {
+        flightLabel.setText("Let " + flight.getId());
+        dateLabel.setText("Datum " + flight.getFrom_date());
+        seatsLabel.setText("Prosta mesta " + (flight.getMax_seats()-flight.getOrders()));
+        priceLabel.setText("Cena " + flight.getPrice() + " €");
 
         flightAnchor.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
-                System.out.println("Flight clicked: " + id);
-                Flight selectedFlight = new Flight(id, from_loc, to_loc, from_date, to_date, price, seats, orders);
+                Flight selectedFlight = new Flight(
+                        flight.getId(),
+                        flight.getFrom_loc(),
+                        flight.getTo_loc(),
+                        flight.getFrom_date(),
+                        flight.getTo_date(),
+                        flight.getPrice(),
+                        flight.getMax_seats(),
+                        flight.getOrders());
                 Controller.flightClicked(selectedFlight);
             }
         });
     }
 
-    public void addFlightContainer(VBox parent, int id, String from_loc, String to_loc, LocalDate from_date, LocalDate to_date, int price, int seats, int orders) {
+    public void addFlightContainer(VBox parent, Flight flight) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/flights/flight.fxml"));
             Node flightContainer = loader.load();
             flightContainer.setCursor(Cursor.HAND);
             FlightContainerController flightController = loader.getController();
-            flightController.initialize(id, from_loc, to_loc, from_date, to_date, price, seats, orders);
+            flightController.initialize(flight);
 
             parent.getChildren().add(flightContainer);
         } catch (IOException e) {
