@@ -57,13 +57,10 @@ public class Helper {
         queryBuilder.append(" = ");
         queryBuilder.append(convertObjectToSQLField(index, indexDataType));
 
-        System.out.println(queryBuilder.toString());
         try (Connection conn = Database.connect()) {
             assert conn != null;
             PreparedStatement pstmt = conn.prepareStatement(queryBuilder.toString());
-
-            System.out.println(pstmt);
-
+            
             return pstmt.executeUpdate(); //number of affected rows
         } catch (SQLException ex) {
             Logger.getAnonymousLogger().log(

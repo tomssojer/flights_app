@@ -24,7 +24,6 @@ public class OrderDAO {
             ResultSet rs = statement.executeQuery();
             orders.clear();
             while (rs.next()) {
-                System.out.println(rs.getInt("id"));
                 orders.add(new Order(
                         rs.getInt("id"),
                         rs.getString("card"),

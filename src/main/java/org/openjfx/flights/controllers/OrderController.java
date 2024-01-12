@@ -1,13 +1,17 @@
 package org.openjfx.flights.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.openjfx.flights.dao.FlightDAO;
 import org.openjfx.flights.dao.OrderDAO;
 import org.openjfx.flights.models.Flight;
@@ -34,16 +38,25 @@ public class OrderController {
     private Label prtljagaLabel;
     @FXML
     private Label karticaLabel;
-
     @FXML
     private Button odstraniButton;
 
+    private Flight flight;
+    public Flight getFlight() {
+        return flight;
+    }
+
+    private Order order;
+
+    public Order getOrder() {
+        return order;
+    }
 
     public void initialize(Order order) {
-        imeLabel.setText(order.getFirst_name() + " " + order.getLast_name());
-
+        this.order = order;
         Optional<Flight> flight = FlightDAO.getFlight(order.getFlight_id());
         flight.ifPresent(let -> {
+            this.flight = let;
             String from_loc = let.getFrom_loc();
             String to_loc = let.getTo_loc();
             destinacijaLabel.setText(from_loc + " -> " + to_loc);
@@ -54,6 +67,8 @@ public class OrderController {
             povratekLabel.setText(povratekLabel.getText() + to_date);
         });
 
+        odstraniButton.setCursor(Cursor.HAND);
+        imeLabel.setText(order.getFirst_name() + " " + order.getLast_name());
         razredLabel.setText(razredLabel.getText() + order.getRazred());
         meniLabel.setText(meniLabel.getText() + order.getFood());
         prtljagaLabel.setText(prtljagaLabel.getText() + order.getSuitcases());
@@ -66,21 +81,21 @@ public class OrderController {
             karticaLabel.setText(karticaLabel.getText() + maskedPart + lastFourDigits);
 
         } else karticaLabel.setText(karticaLabel.getText() + kartica);
-    }
-    public void addOrderContainer(VBox parent, Order order) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/flights/order.fxml"));
-            Node orderContainer = loader.load();
-            OrderController orderController = loader.getController();
-            orderController.initialize(order);
 
-            parent.getChildren().add(orderContainer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        odstraniButton.setOnAction(event -> areYouSureToDelete());
+    }
+    public void addOrderContainer(VBox parent, Order order) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/flights/order.fxml"));
+        loader.setController(this);
+        Node container = loader.load();
+        OrderController orderController = loader.getController();
+        orderController.initialize(order);
+
+        parent.getChildren().add(container);
     }
 
-//    public void deleteOrder() {
-//        OrderDAO.delete();
-//    }
+    public void areYouSureToDelete() {
+        DeletePromptController deletePromptController = new DeletePromptController(this);
+        deletePromptController.showStage();
+    }
 }

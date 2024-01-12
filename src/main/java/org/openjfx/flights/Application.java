@@ -1,12 +1,10 @@
 package org.openjfx.flights;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.openjfx.flights.dao.OrderDAO;
-import org.openjfx.flights.models.Order;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
 
@@ -19,7 +17,9 @@ public class Application extends javafx.application.Application {
 
         Scene scene = new Scene(root, 640, 480);
         stage.setScene(scene);
+        stage.setTitle("Polet v neznano");
         scene.getStylesheets().add("style.css");
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());       //(3)
         stage.show();
     }
 

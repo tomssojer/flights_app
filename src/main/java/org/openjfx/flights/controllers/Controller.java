@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -38,16 +39,12 @@ public class Controller implements Initializable {
     @FXML
     private DatePicker prihodPicker;
     @FXML
-    private Spinner<Integer> seatsSpinner;
-    @FXML
-    private Button isciButton;
-    @FXML
     private VBox letiContainer;
     @FXML
     private VBox orderContainer;
+    @FXML
+    private ScrollPane scrollpaneParent;
 
-
-    private static final ListView<Flight> flightsListView = new ListView<>();
     private final String[] from_locations = {"Ljubljana", "Trst", "Benetke", "Zagreb", "Dunaj", "Munich"};
     private final String[] to_locations = {"Berlin", "Madrid", "Paris", "London", "Praga", "Rim", "Bern", "Varšava",
             "Amsterdam", "Frankfurt", "Bruselj", "New York", "Barcelona"};
@@ -113,26 +110,27 @@ public class Controller implements Initializable {
             FXMLLoader loader = new FXMLLoader(Controller.class.getResource("/org/openjfx/flights/modal.fxml"));
             Parent root = loader.load();
 
-            // Access the controller and set data from the selected flight
             ModalController modalController = loader.getController();
             modalController.initialize(selectedFlight);
 
-            // Create a new dialog or scene to display the modal
             Stage modalStage = new Stage();
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setTitle("Flight Reservation");
             modalStage.setScene(new Scene(root));
 
-            modalStage.showAndWait(); // This will wait for the modal to be closed
+            modalStage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
         }
     }
 
-    public void loadOrders() {
+    public void loadOrders() throws IOException {
 
         if (orderContainer != null) orderContainer.getChildren().clear();
-        else System.out.println("Null");
+
+        assert orderContainer != null;
+        System.out.println(scrollpaneParent.getChildrenUnmodifiable());
+        System.out.println(orderContainer.getParent().getChildrenUnmodifiable());
 
         ObservableList<Order> searchResults = OrderDAO.getOrders();
 
