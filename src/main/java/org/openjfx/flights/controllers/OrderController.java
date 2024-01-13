@@ -22,6 +22,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public class OrderController {
+    private final Controller controller;
+
     @FXML
     private Label imeLabel;
     @FXML
@@ -50,6 +52,10 @@ public class OrderController {
 
     public Order getOrder() {
         return order;
+    }
+
+    public OrderController(Controller controller) {
+        this.controller = controller;
     }
 
     public void initialize(Order order) {
@@ -95,7 +101,7 @@ public class OrderController {
     }
 
     public void areYouSureToDelete() {
-        DeletePromptController deletePromptController = new DeletePromptController(this);
+        DeletePromptController deletePromptController = new DeletePromptController(this, controller);
         deletePromptController.showStage();
     }
 }

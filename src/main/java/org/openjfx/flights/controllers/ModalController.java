@@ -6,9 +6,13 @@ import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -161,20 +165,20 @@ public class ModalController {
 
         // Handle textfields
         String card = karticaField.getText();
-        if (card.isEmpty()) markEmptyField(karticaField);
+        if (card.isEmpty()) isOkay = markEmptyField(karticaField);
         String first_name = imeField.getText();
-        if (first_name.isEmpty()) markEmptyField(imeField);
+        if (first_name.isEmpty()) isOkay = markEmptyField(imeField);
         String last_name = priimekField.getText();
-        if (last_name.isEmpty()) markEmptyField(priimekField);
+        if (last_name.isEmpty()) isOkay = markEmptyField(priimekField);
         String address = naslovField.getText() + ", " + postnaField.getText() + ", " + mestoField.getText();
-        if (naslovField.getText().isEmpty()) markEmptyField(naslovField);
-        if (postnaField.getText().isEmpty()) markEmptyField(postnaField);
-        if (mestoField.getText().isEmpty()) markEmptyField(mestoField);
+        if (naslovField.getText().isEmpty()) isOkay = markEmptyField(naslovField);
+        if (postnaField.getText().isEmpty()) isOkay = markEmptyField(postnaField);
+        if (mestoField.getText().isEmpty()) isOkay = markEmptyField(mestoField);
         String passport = potniField.getText();
-        if (passport.isEmpty()) markEmptyField(potniField);
-        if (mailField.getText().isEmpty()) markEmptyField(mailField);
-        if (stevilkaKarticeField.getText().isEmpty()) markEmptyField(stevilkaKarticeField);
-        if (zascitnaKodaField.getText().isEmpty()) markEmptyField(zascitnaKodaField);
+        if (passport.isEmpty()) isOkay = markEmptyField(potniField);
+        if (mailField.getText().isEmpty()) isOkay = markEmptyField(mailField);
+        if (stevilkaKarticeField.getText().isEmpty()) isOkay = markEmptyField(stevilkaKarticeField);
+        if (zascitnaKodaField.getText().isEmpty()) isOkay = markEmptyField(zascitnaKodaField);
         if (datumPicker.getValue() == null) datumPicker.setStyle("-fx-border-color: red;");
         if (Objects.equals(karticaCombobox.getValue(), karticaCombobox.getPromptText())) karticaCombobox.setStyle("-fx-border-color: red;");
 

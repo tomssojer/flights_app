@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class DeletePromptController {
     private final OrderController orderController;
+    private final Controller controller;
     @FXML
     private Label nameLabel;
     @FXML
@@ -27,8 +28,9 @@ public class DeletePromptController {
     private Order order;
     Stage thisStage = new Stage();
 
-    public DeletePromptController(OrderController orderController) {
+    public DeletePromptController(OrderController orderController, Controller controller) {
         this.orderController = orderController;
+        this.controller = controller;
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/flights/deletePrompt.fxml"));
@@ -72,11 +74,12 @@ public class DeletePromptController {
     public void deleteOrder(Order order) throws IOException {
 
         OrderDAO.delete(order.getId());
-//
-//        Controller controller = new Controller();
-//        controller.loadOrders();
+
+        controller.loadOrders();
 
         Stage stage = (Stage) izbrisiButton.getScene().getWindow();
         stage.close();
+
+        controller.showStatusBox("Rezervacija izbrisana");
     }
 }

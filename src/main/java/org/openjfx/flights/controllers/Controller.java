@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -65,7 +66,7 @@ public class Controller implements Initializable {
     private final String[] to_locations = {"Berlin", "Madrid", "Paris", "London", "Praga", "Rim", "Bern", "Varšava",
             "Amsterdam", "Frankfurt", "Bruselj", "New York", "Barcelona"};
 
-    public void searchFlights() {
+    public void searchFlights() throws IOException {
         letiContainer.getChildren().clear();
 
         String odkod = odkodCombobox.getValue();
@@ -89,7 +90,7 @@ public class Controller implements Initializable {
                 if (count >= limit) break;
             }
 
-            showStatusBox(statusBox, statusLabel, "available flights loaded");
+            showStatusBox("destinacije prikazane");
         }
     }
 
@@ -154,16 +155,16 @@ public class Controller implements Initializable {
             orderContainer.getChildren().add(noOrdersLabel);
         } else {
             for (Order order : searchResults) {
-                OrderController orderController = new OrderController();
+                OrderController orderController = new OrderController(this);
                 orderController.addOrderContainer(orderContainer, order);
             }
         }
     }
 
-    private void showStatusBox(HBox box, Label label, String output) {
-        label.setText("Status: " + output);
-        box.setOpacity(1);
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), box);
+    public void showStatusBox(String output) {
+        statusLabel.setText("Status: " + output);
+        statusBox.setOpacity(1);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), statusBox);
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.setCycleCount(1);
