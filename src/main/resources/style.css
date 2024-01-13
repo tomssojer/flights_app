@@ -45,9 +45,6 @@
 }
 
 .order-vbox {
+    -fx-border-radius: 20px;
     -fx-border-color: -fx-dark-blue;
-}
-
-.order-vbox:hover {
-    -fx-background-color: -fx-green;
 }

@@ -6,7 +6,9 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.spreadsheet.Grid;
 import org.openjfx.flights.models.Flight;
 import java.io.IOException;
 
@@ -14,18 +16,21 @@ public class FlightContainerController {
     @FXML
     private Label flightLabel;
     @FXML
-    private Label dateLabel;
+    private Label depLabel;
+    @FXML
+    private Label arrLabel;
     @FXML
     private Label seatsLabel;
     @FXML
     private Label priceLabel;
     @FXML
-    private AnchorPane flightAnchor;
+    private GridPane flightAnchor;
 
     public void initialize(Flight flight) {
         flightLabel.setText(flight.getFrom_loc() + " -> " + flight.getTo_loc());
-        dateLabel.setText("Datum " + flight.getFrom_date());
-        seatsLabel.setText("Prosta mesta " + (flight.getMax_seats()-flight.getOrders()));
+        depLabel.setText("Datum odhoda: " + flight.getFrom_date());
+        arrLabel.setText("Datum povratka: " + flight.getTo_date());
+        seatsLabel.setText("Število prostih sedežev: " + (flight.getMax_seats()-flight.getOrders()));
         priceLabel.setText("Cena " + flight.getPrice() + " €");
 
         flightAnchor.setOnMouseClicked(event -> {

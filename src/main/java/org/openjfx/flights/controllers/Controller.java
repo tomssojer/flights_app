@@ -1,5 +1,8 @@
 package org.openjfx.flights.controllers;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -12,9 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 import org.hibernate.mapping.ValueVisitor;
 import org.openjfx.flights.dao.FlightDAO;
@@ -51,6 +56,10 @@ public class Controller implements Initializable {
     private TabPane tabPane;
     @FXML
     private Label rezultatiLabel;
+    @FXML
+    private Label statusLabel;
+    @FXML
+    private HBox statusBox;
 
     private final String[] from_locations = {"Ljubljana", "Trst", "Benetke", "Zagreb", "Dunaj", "Munich"};
     private final String[] to_locations = {"Berlin", "Madrid", "Paris", "London", "Praga", "Rim", "Bern", "Varšava",
@@ -79,6 +88,8 @@ public class Controller implements Initializable {
                 count++;
                 if (count >= limit) break;
             }
+
+            showStatusBox(statusBox, statusLabel, "available flights loaded");
         }
     }
 
@@ -147,6 +158,25 @@ public class Controller implements Initializable {
                 orderController.addOrderContainer(orderContainer, order);
             }
         }
+    }
+
+    private void showStatusBox(HBox box, Label label, String output) {
+        label.setText("Status: " + output);
+        box.setOpacity(1);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), box);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.setCycleCount(1);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(10), event -> {
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+                })
+        );
+        fadeTransition.play();
+        timeline.play();
     }
 
     @Override

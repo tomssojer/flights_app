@@ -50,8 +50,8 @@ public class DeletePromptController {
 
         this.order = orderController.getOrder();
 
-        nameLabel.setText(order.getFirst_name() + " " + order.getLast_name());
-        locationLabel.setText(orderController.getFlight().getFrom_loc() + " -> " + orderController.getFlight().getTo_loc());
+        nameLabel.setText(nameLabel.getText() + order.getFirst_name() + " " + order.getLast_name());
+        locationLabel.setText(locationLabel.getText() + orderController.getFlight().getFrom_loc() + " -> " + orderController.getFlight().getTo_loc());
 
         prekliciButton.setOnAction(event -> closePrompt());
         izbrisiButton.setOnAction(event -> {
@@ -72,9 +72,9 @@ public class DeletePromptController {
     public void deleteOrder(Order order) throws IOException {
 
         OrderDAO.delete(order.getId());
-
-        Controller controller = new Controller();
-        controller.loadOrders();
+//
+//        Controller controller = new Controller();
+//        controller.loadOrders();
 
         Stage stage = (Stage) izbrisiButton.getScene().getWindow();
         stage.close();

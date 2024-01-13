@@ -9,7 +9,7 @@
         <Tab styleClass="tab" text="Iskanje letov">
             <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
                 <VBox alignment="TOP_CENTER" styleClass="vbox">
-                    <VBox spacing="10" alignment="TOP_CENTER" minHeight="150">
+                    <VBox alignment="TOP_CENTER" minHeight="150" spacing="10">
                         <GridPane alignment="CENTER" layoutX="129.0" layoutY="2.0" prefHeight="87.0" prefWidth="600.0" AnchorPane.leftAnchor="129.0">
                             <columnConstraints>
                                 <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -35,14 +35,26 @@
                         <Button fx:id="isciButton" contentDisplay="TOP" layoutX="271.0" layoutY="92.0" mnemonicParsing="false" onAction="#searchFlights" styleClass="btn, btn-primary, isciButton" text="Išči lete" />
                         <Label fx:id="rezultatiLabel" text="" />
                     </VBox>
-                    <VBox fx:id="letiContainer" layoutX="55.0" layoutY="132.0" prefHeight="233.0" prefWidth="453.0" styleClass="letVBox" />
+                    <VBox fx:id="letiContainer" layoutX="55.0" layoutY="132.0" prefHeight="233.0" prefWidth="453.0" styleClass="letVBox">
+                  <children>
+                     <HBox prefHeight="100.0" prefWidth="200.0" />
+                  </children></VBox>
                 </VBox>
             </ScrollPane>
         </Tab>
         <Tab onSelectionChanged="#loadOrders" styleClass="tab" text="Naročila">
             <ScrollPane fx:id="scrollpaneParent" fitToHeight="true" fitToWidth="true">
-                <VBox fx:id="orderContainer" alignment="TOP_CENTER" prefHeight="349.0" prefWidth="584.0" styleClass="vbox" />
+                <VBox fx:id="orderContainer" alignment="CENTER" spacing="20" prefHeight="349.0" prefWidth="584.0" styleClass="vbox" />
             </ScrollPane>
         </Tab>
     </TabPane>
+    <HBox fx:id="statusBox" maxHeight="25" prefHeight="25.0" prefWidth="200.0" spacing="10"
+          style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+        <Label fx:id="statusLabel">
+           <HBox.margin>
+               <Insets left="10.0"/>
+           </HBox.margin>
+        </Label>
+    </HBox>
 </AnchorPane>

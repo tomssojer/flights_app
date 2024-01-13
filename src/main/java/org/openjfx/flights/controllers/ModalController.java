@@ -12,9 +12,12 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.hibernate.boot.archive.scan.internal.StandardScanner;
 import org.hibernate.boot.model.source.internal.OverriddenMappingDefaults;
 import org.openjfx.flights.dao.OrderDAO;
 import org.openjfx.flights.models.Flight;
+
+import java.util.Objects;
 
 public class ModalController {
     @FXML
@@ -66,11 +69,12 @@ public class ModalController {
     @FXML
     private Label letLabel;
     @FXML
-    private Label datumLabel;
+    private Label datumOdhodaLabel;
+    @FXML
+    private Label datumPovratkaLabel;
     @FXML
     private Label emptyLabel;
 
-    private int countStevilkaKartice = 1;
     private int flight_id;
     private final String[] kartice = {"Visa", "Mastercard", "American Express"};
 
@@ -78,8 +82,9 @@ public class ModalController {
         flight_id = selectedFlight.getId();
         if (karticaCombobox != null) karticaCombobox.getItems().addAll(kartice);
 
-        letLabel.setText(selectedFlight.getFrom_loc() + " -> " + selectedFlight.getTo_loc());
-        datumLabel.setText(selectedFlight.getFrom_date().toString());
+        letLabel.setText(letLabel.getText() + selectedFlight.getFrom_loc() + " -> " + selectedFlight.getTo_loc());
+        datumOdhodaLabel.setText(datumOdhodaLabel.getText() + selectedFlight.getFrom_date().toString());
+        datumPovratkaLabel.setText(datumPovratkaLabel.getText() + selectedFlight.getTo_date().toString());
 
         // Radio buttons
         osnovnaRadio.setOnAction(event -> vecjaRadio.setSelected(false));
@@ -89,12 +94,27 @@ public class ModalController {
         mesniRadio.setOnAction(event -> vegiRadio.setSelected(false));
         vegiRadio.setOnAction(event -> mesniRadio.setSelected(false));
 
+        addListeners(imeField);
+        addListeners(priimekField);
+        addListeners(naslovField);
+        addListeners(mestoField);
+        addListeners(postnaField);
+        addListeners(potniField);
+        addListeners(karticaField);
+        addListeners(stevilkaKarticeField);
+        addListeners(zascitnaKodaField);
+        addListeners(mailField);
+        addListeners(ekonomskiRadio, prviRadio);
+        addListeners(prviRadio, ekonomskiRadio);
+        addListeners(mesniRadio, vegiRadio);
+        addListeners(vegiRadio, mesniRadio);
+        addListeners(osnovnaRadio, vecjaRadio);
+        addListeners(vecjaRadio, osnovnaRadio);
+
         setupCreditCardFormatter();
     }
 
     private void setupCreditCardFormatter() {
-        // Regular expression for matching 16 digits in groups of 4
-
         stevilkaKarticeField.textProperty().addListener((observable, oldValue, newValue) -> {
             int valLength = newValue.length();
             if (valLength >= 20) stevilkaKarticeField.setText(oldValue);
@@ -102,7 +122,7 @@ public class ModalController {
             if (valLength > 0 && valLength % 5 == 0 && valLength != 20) {
                 newValue = newValue.substring(0, valLength - 1) + "-";
                 stevilkaKarticeField.setText(newValue);
-                stevilkaKarticeField.positionCaret(valLength); // Keep the caret at the end
+                stevilkaKarticeField.positionCaret(valLength);
             }
         });
     }
@@ -113,25 +133,26 @@ public class ModalController {
     }
 
     public void resetOrder() {
-        imeField.setText("");
-        priimekField.setText("");
-        naslovField.setText("");
-        mestoField.setText("");
-        postnaField.setText("");
-        potniField.setText("");
-        karticaField.setText("");
-        stevilkaKarticeField.setText("");
-        zascitnaKodaField.setText("");
-        mailField.setText("");
-        karticaCombobox.getSelectionModel().clearSelection();
-        karticaCombobox.setPromptText("Vrsta kartice");
-        ekonomskiRadio.setSelected(false);
-        prviRadio.setSelected(false);
-        mesniRadio.setSelected(false);
-        vegiRadio.setSelected(false);
-        osnovnaRadio.setSelected(false);
-        vecjaRadio.setSelected(false);
+        resetTextField(imeField);
+        resetTextField(priimekField);
+        resetTextField(naslovField);
+        resetTextField(mestoField);
+        resetTextField(postnaField);
+        resetTextField(potniField);
+        resetTextField(karticaField);
+        resetTextField(stevilkaKarticeField);
+        resetTextField(zascitnaKodaField);
+        resetTextField(mailField);
+        resetRadioButton(ekonomskiRadio);
+        resetRadioButton(prviRadio);
+        resetRadioButton(mesniRadio);
+        resetRadioButton(vegiRadio);
+        resetRadioButton(osnovnaRadio);
+        resetRadioButton(vecjaRadio);
         datumPicker.setValue(null);
+        datumPicker.setStyle("-fx-border-color: transparent;");
+        karticaCombobox.setStyle("-fx-border-color: transparent;");
+        karticaCombobox.setValue(karticaCombobox.getPromptText());
     }
 
     public void reserveOnAction(ActionEvent actionEvent) {
@@ -151,6 +172,11 @@ public class ModalController {
         if (mestoField.getText().isEmpty()) markEmptyField(mestoField);
         String passport = potniField.getText();
         if (passport.isEmpty()) markEmptyField(potniField);
+        if (mailField.getText().isEmpty()) markEmptyField(mailField);
+        if (stevilkaKarticeField.getText().isEmpty()) markEmptyField(stevilkaKarticeField);
+        if (zascitnaKodaField.getText().isEmpty()) markEmptyField(zascitnaKodaField);
+        if (datumPicker.getValue() == null) datumPicker.setStyle("-fx-border-color: red;");
+        if (Objects.equals(karticaCombobox.getValue(), karticaCombobox.getPromptText())) karticaCombobox.setStyle("-fx-border-color: red;");
 
         // Handle buttons
         int suitcases = 0;
@@ -160,7 +186,7 @@ public class ModalController {
         String razred = null;
         if (ekonomskiRadio.isSelected()) razred = ekonomskiRadio.getText();
         else if (prviRadio.isSelected()) razred = prviRadio.getText();
-        else isOkay = markEmptyButton(ekonomskiRadio, vegiRadio);
+        else isOkay = markEmptyButton(ekonomskiRadio, prviRadio);
         String food = null;
         if (mesniRadio.isSelected()) food = mesniRadio.getText();
         else if (vegiRadio.isSelected()) food = vegiRadio.getText();
@@ -210,6 +236,29 @@ public class ModalController {
     private boolean markEmptyButton(RadioButton... radioButtons) {
         for (RadioButton radioButton : radioButtons) radioButton.setStyle("-fx-border-color: red;");
         return false;
+    }
+
+    private void resetTextField(TextField textField) {
+        textField.setText("");
+        textField.setStyle("-fx-border-color: transparent;");
+    }
+
+    private void resetRadioButton(RadioButton radioButton) {
+        radioButton.setSelected(false);
+        radioButton.setStyle("-fx-border-color: transparent;");
+    }
+
+    private void addListeners(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            textField.setStyle("-fx-border-color: transparent;");
+        });
+    }
+
+    private void addListeners(RadioButton radioButton, RadioButton secondButton) {
+        radioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            radioButton.setStyle("-fx-border-color: transparent;");
+            secondButton.setStyle("-fx-border-color: transparent");
+        });
     }
 
 }
