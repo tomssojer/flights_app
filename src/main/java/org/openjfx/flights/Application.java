@@ -13,13 +13,11 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("app.fxml"));
-        Parent root = fxmlLoader.load();
-
-        Scene scene = new Scene(root, 640, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
         stage.setScene(scene);
         stage.setTitle("Polet v neznano");
         scene.getStylesheets().add("style.css");
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());       //(3)
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         stage.show();
     }
 

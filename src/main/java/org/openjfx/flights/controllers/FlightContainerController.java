@@ -23,7 +23,7 @@ public class FlightContainerController {
     private AnchorPane flightAnchor;
 
     public void initialize(Flight flight) {
-        flightLabel.setText("Let " + flight.getId());
+        flightLabel.setText(flight.getFrom_loc() + " -> " + flight.getTo_loc());
         dateLabel.setText("Datum " + flight.getFrom_date());
         seatsLabel.setText("Prosta mesta " + (flight.getMax_seats()-flight.getOrders()));
         priceLabel.setText("Cena " + flight.getPrice() + " €");

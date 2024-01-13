@@ -1,79 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.flights.controllers.Controller">
-   <children>
-      <MenuBar layoutY="1.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TabPane layoutX="-2.0" layoutY="27.0" prefHeight="373.0" prefWidth="606.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Iskanje destinacij">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <GridPane layoutX="127.0" layoutY="14.0" prefHeight="90.0" prefWidth="354.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <DatePicker fx:id="odhodPicker" promptText="Datum odhoda" GridPane.rowIndex="1" />
-                              <DatePicker fx:id="prihodPicker" promptText="Datum prihoda" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                               <Spinner fx:id="seatsSpinner" editable="true" prefHeight="24.0" prefWidth="191.0" GridPane.rowIndex="3">
-                                   <valueFactory>
-                                       <SpinnerValueFactory.IntegerSpinnerValueFactory initialValue="1" max="10" min="1" />
-                                   </valueFactory>
-                               </Spinner>
-                              <ComboBox fx:id="odkodCombobox" prefHeight="24.0" prefWidth="182.0" promptText="Od kod?" />
-                              <ComboBox fx:id="kamCombobox" prefHeight="24.0" prefWidth="206.0" promptText="Kam?" GridPane.columnIndex="1" />
-                           </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.flights.controllers.Controller">
+    <TabPane fx:id="tabPane" styleClass="rootAnchor" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Tab styleClass="tab" text="Iskanje letov">
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
+                <VBox alignment="TOP_CENTER" styleClass="vbox">
+                    <VBox spacing="10" alignment="TOP_CENTER" minHeight="150">
+                        <GridPane alignment="CENTER" layoutX="129.0" layoutY="2.0" prefHeight="87.0" prefWidth="600.0" AnchorPane.leftAnchor="129.0">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="30.0" vgrow="ALWAYS" />
+                            </rowConstraints>
+                            <DatePicker fx:id="odhodPicker" prefHeight="24.0" prefWidth="200.0" promptText="Datum odhoda" GridPane.rowIndex="1">
+                                <GridPane.margin>
+                                    <Insets right="10.0" />
+                                </GridPane.margin>
+                            </DatePicker>
+                            <DatePicker fx:id="prihodPicker" prefHeight="24.0" prefWidth="200.0" promptText="Datum prihoda" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <ComboBox fx:id="odkodCombobox" prefHeight="24.0" prefWidth="200.0" promptText="Od kod?">
+                                <GridPane.margin>
+                                    <Insets right="10.0" />
+                                </GridPane.margin>
+                            </ComboBox>
+                            <ComboBox fx:id="kamCombobox" prefHeight="24.0" prefWidth="200.0" promptText="Kam?" GridPane.columnIndex="1" />
                         </GridPane>
-                        <Button fx:id="isciButton" styleClass="btn, btn-primary" contentDisplay="TOP" layoutX="269.0" layoutY="113.0" mnemonicParsing="false" onAction="#searchFlights" text="Išči lete" />
-                        <ScrollPane layoutX="55.0" layoutY="159.0" prefHeight="393.0" prefWidth="498.0">
-                           <content>
-                              <VBox fx:id="letiContainer" prefHeight="222.0" prefWidth="499.0" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab onSelectionChanged="#loadOrders" text="Naročila">
-              <AnchorPane>
-                  <children>
-                     <ScrollPane fx:id="scrollpaneParent" layoutX="8.0" layoutY="14.0" prefHeight="349.0" prefWidth="597.0">
-                       <content>
-                           <VBox fx:id="orderContainer" prefHeight="349.0" prefWidth="584.0" />
-                       </content>
-                     </ScrollPane>
-                  </children></AnchorPane>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+                        <Button fx:id="isciButton" contentDisplay="TOP" layoutX="271.0" layoutY="92.0" mnemonicParsing="false" onAction="#searchFlights" styleClass="btn, btn-primary, isciButton" text="Išči lete" />
+                        <Label fx:id="rezultatiLabel" text="" />
+                    </VBox>
+                    <VBox fx:id="letiContainer" layoutX="55.0" layoutY="132.0" prefHeight="233.0" prefWidth="453.0" styleClass="letVBox" />
+                </VBox>
+            </ScrollPane>
+        </Tab>
+        <Tab onSelectionChanged="#loadOrders" styleClass="tab" text="Naročila">
+            <ScrollPane fx:id="scrollpaneParent" fitToHeight="true" fitToWidth="true">
+                <VBox fx:id="orderContainer" alignment="TOP_CENTER" prefHeight="349.0" prefWidth="584.0" styleClass="vbox" />
+            </ScrollPane>
+        </Tab>
+    </TabPane>
 </AnchorPane>

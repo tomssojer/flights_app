@@ -46,6 +46,8 @@ public class DeletePromptController {
 
     @FXML
     private void initialize() {
+        locationLabel.getStyleClass().add("align-right");
+
         this.order = orderController.getOrder();
 
         nameLabel.setText(order.getFirst_name() + " " + order.getLast_name());

@@ -1,5 +1,6 @@
 package org.openjfx.flights.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -31,6 +32,8 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
+    private MenuItem closeMenuitem;
+    @FXML
     private ComboBox<String> odkodCombobox;
     @FXML
     private ComboBox<String> kamCombobox;
@@ -44,6 +47,10 @@ public class Controller implements Initializable {
     private VBox orderContainer;
     @FXML
     private ScrollPane scrollpaneParent;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Label rezultatiLabel;
 
     private final String[] from_locations = {"Ljubljana", "Trst", "Benetke", "Zagreb", "Dunaj", "Munich"};
     private final String[] to_locations = {"Berlin", "Madrid", "Paris", "London", "Praga", "Rim", "Bern", "Varšava",
@@ -115,7 +122,7 @@ public class Controller implements Initializable {
 
             Stage modalStage = new Stage();
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Flight Reservation");
+            modalStage.setTitle("Rezerviraj let");
             modalStage.setScene(new Scene(root));
 
             modalStage.showAndWait();
@@ -127,11 +134,7 @@ public class Controller implements Initializable {
     public void loadOrders() throws IOException {
 
         if (orderContainer != null) orderContainer.getChildren().clear();
-
         assert orderContainer != null;
-        System.out.println(scrollpaneParent.getChildrenUnmodifiable());
-        System.out.println(orderContainer.getParent().getChildrenUnmodifiable());
-
         ObservableList<Order> searchResults = OrderDAO.getOrders();
 
         if (searchResults.isEmpty()) {

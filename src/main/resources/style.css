@@ -1,7 +1,53 @@
-.button-reverse {
-    -fx-background-radius: 100;
+* {
+    -fx-red: #E63946;
+    -fx-white: #F1FAEE;
+    -fx-green: #A8DADC;
+    -fx-light-blue: #457B9D;
+    -fx-dark-blue: #1D3557;
+}
+
+.isciButton:hover {
+    -fx-cursor: hand;
+ }
+
+.flightAnchor {
+    -fx-start-margin: 20px;
+    -fx-background-color: -fx-green;
+    -fx-border-radius: 10px;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-dark-blue;
 }
 
 .flightAnchor:hover {
-    -fx-background-color: #34b4eb;
+    -fx-background-color: -fx-light-blue;
+    -fx-border-radius: 5px;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: -fx-white;
+    -fx-effect: null;
+}
+
+.tab, .vbox {
+    -fx-background-color: -fx-white;
+}
+
+.tab:selected {
+    -fx-background-color: -fx-green;
+}
+
+.tab:hover {
+    -fx-cursor: hand;
+}
+
+.rootAnchor {
+    -fx-background-color: -fx-dark-blue;
+}
+
+.order-vbox {
+    -fx-border-color: -fx-dark-blue;
+}
+
+.order-vbox:hover {
+    -fx-background-color: -fx-green;
 }
