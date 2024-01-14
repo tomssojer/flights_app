@@ -77,7 +77,7 @@ public class OrderController {
         imeLabel.setText(order.getFirst_name() + " " + order.getLast_name());
         razredLabel.setText(razredLabel.getText() + order.getRazred());
         meniLabel.setText(meniLabel.getText() + order.getFood());
-        prtljagaLabel.setText(prtljagaLabel.getText() + order.getSuitcases());
+        prtljagaLabel.setText(prtljagaLabel.getText() + order.getSuitcases() + " kg");
 
         String kartica = order.getCard();
         if (kartica.length() > 4) {

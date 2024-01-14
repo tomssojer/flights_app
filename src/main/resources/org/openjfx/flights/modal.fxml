@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="667.0" prefWidth="805.0" spacing="10" style="-fx-background-color: #F1FAEE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.flights.controllers.ModalController">
+<VBox prefHeight="667.0" prefWidth="805.0" spacing="10" style="-fx-background-color: #F1FAEE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <HBox prefHeight="18.0" prefWidth="600.0">
         <HBox.margin>
             <Insets left="20.0" top="10" />

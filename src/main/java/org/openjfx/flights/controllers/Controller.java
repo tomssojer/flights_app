@@ -84,7 +84,7 @@ public class Controller implements Initializable {
             int count = 0;
             int limit = 20;
             for (Flight flight : searchResults) {
-                FlightContainerController flightContainerController = new FlightContainerController();
+                FlightContainerController flightContainerController = new FlightContainerController(this);
                 flightContainerController.addFlightContainer(letiContainer, flight);
                 count++;
                 if (count >= limit) break;
@@ -122,25 +122,6 @@ public class Controller implements Initializable {
                 }
             }
         });
-    }
-
-    public static void flightClicked(Flight selectedFlight) {
-        try {
-            FXMLLoader loader = new FXMLLoader(Controller.class.getResource("/org/openjfx/flights/modal.fxml"));
-            Parent root = loader.load();
-
-            ModalController modalController = loader.getController();
-            modalController.initialize(selectedFlight);
-
-            Stage modalStage = new Stage();
-            modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Rezerviraj let");
-            modalStage.setScene(new Scene(root, 1080, 720));
-
-            modalStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void loadOrders() throws IOException {

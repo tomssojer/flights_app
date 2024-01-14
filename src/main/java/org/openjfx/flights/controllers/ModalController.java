@@ -21,9 +21,12 @@ import org.hibernate.boot.model.source.internal.OverriddenMappingDefaults;
 import org.openjfx.flights.dao.OrderDAO;
 import org.openjfx.flights.models.Flight;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class ModalController {
+    private final Controller controller;
+    private final FlightContainerController flightContainerController;
     @FXML
     private TextField imeField;
     @FXML
@@ -81,6 +84,29 @@ public class ModalController {
 
     private int flight_id;
     private final String[] kartice = {"Visa", "Mastercard", "American Express"};
+    Stage thisStage = new Stage();
+    private Flight selectedFlight;
+
+    public ModalController(Controller controller, FlightContainerController flightContainerController, Flight selectedFlight) {
+        this.controller = controller;
+        this.flightContainerController = flightContainerController;
+        this.selectedFlight  = selectedFlight;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/flights/modal.fxml"));
+            loader.setController(this);
+            thisStage.setScene(new Scene(loader.load(), 1080, 720));
+            thisStage.setTitle("Rezerviraj let");
+            initialize(selectedFlight);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showStage() {
+        thisStage.showAndWait();
+    }
+
 
     public void initialize(Flight selectedFlight) {
         flight_id = selectedFlight.getId();
@@ -164,7 +190,7 @@ public class ModalController {
         boolean isOkay = true;
 
         // Handle textfields
-        String card = karticaField.getText();
+        String card = stevilkaKarticeField.getText();
         if (card.isEmpty()) isOkay = markEmptyField(karticaField);
         String first_name = imeField.getText();
         if (first_name.isEmpty()) isOkay = markEmptyField(imeField);
@@ -210,6 +236,8 @@ public class ModalController {
             );
             Stage stage = (Stage) rezervirajButton.getScene().getWindow();
             stage.close();
+
+            controller.showStatusBox("Let uspešno rezerviran");
         } else {
             emptyLabel.setText("Dopolni vsa polja");
             emptyLabel.setStyle("-fx-text-fill: red");

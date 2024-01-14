@@ -13,6 +13,7 @@ import org.openjfx.flights.models.Flight;
 import java.io.IOException;
 
 public class FlightContainerController {
+    private final Controller controller;
     @FXML
     private Label flightLabel;
     @FXML
@@ -25,6 +26,10 @@ public class FlightContainerController {
     private Label priceLabel;
     @FXML
     private GridPane flightAnchor;
+
+    public FlightContainerController(Controller controller) {
+        this.controller = controller;
+    }
 
     public void initialize(Flight flight) {
         flightLabel.setText(flight.getFrom_loc() + " -> " + flight.getTo_loc());
@@ -44,7 +49,8 @@ public class FlightContainerController {
                         flight.getPrice(),
                         flight.getMax_seats(),
                         flight.getOrders());
-                Controller.flightClicked(selectedFlight);
+                ModalController modalController = new ModalController(controller, this, selectedFlight);
+                modalController.showStage();
             }
         });
     }
@@ -52,6 +58,7 @@ public class FlightContainerController {
     public void addFlightContainer(VBox parent, Flight flight) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/flights/flight.fxml"));
+            loader.setController(this);
             Node flightContainer = loader.load();
             flightContainer.setCursor(Cursor.HAND);
             FlightContainerController flightController = loader.getController();

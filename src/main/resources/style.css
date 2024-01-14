@@ -15,7 +15,7 @@
     -fx-border-width: 2px;
     -fx-border-color: -fx-dark-blue;
     -fx-background-radius: 20px;
-    -fx-background-color: -fx-green;
+    -fx-background-color: -fx-white;
 }
 
 .flightAnchor:hover {
@@ -29,12 +29,12 @@
     -fx-effect: null;
 }
 
-.tab, .vbox {
-    -fx-background-color: -fx-white;
+.tab:selected, .vbox {
+    -fx-background-color: -fx-green;
 }
 
-.tab:selected {
-    -fx-background-color: -fx-green;
+.tab {
+    -fx-background-color: -fx-white;
 }
 
 .tab:hover {
@@ -48,4 +48,6 @@
 .order-vbox {
     -fx-border-radius: 20px;
     -fx-border-color: -fx-dark-blue;
+    -fx-background-color: -fx-white;
+    -fx-background-radius: 20px;
 }
