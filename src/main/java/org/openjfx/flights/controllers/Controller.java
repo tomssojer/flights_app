@@ -135,7 +135,7 @@ public class Controller implements Initializable {
             Stage modalStage = new Stage();
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setTitle("Rezerviraj let");
-            modalStage.setScene(new Scene(root));
+            modalStage.setScene(new Scene(root, 1080, 720));
 
             modalStage.showAndWait();
         } catch (IOException e) {

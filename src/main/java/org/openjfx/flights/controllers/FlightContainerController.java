@@ -28,9 +28,9 @@ public class FlightContainerController {
 
     public void initialize(Flight flight) {
         flightLabel.setText(flight.getFrom_loc() + " -> " + flight.getTo_loc());
-        depLabel.setText("Datum odhoda: " + flight.getFrom_date());
-        arrLabel.setText("Datum povratka: " + flight.getTo_date());
-        seatsLabel.setText("Število prostih sedežev: " + (flight.getMax_seats()-flight.getOrders()));
+        depLabel.setText(depLabel.getText() + flight.getFrom_date());
+        arrLabel.setText(arrLabel.getText() + flight.getTo_date());
+        seatsLabel.setText(seatsLabel.getText() + (flight.getMax_seats()-flight.getOrders()));
         priceLabel.setText("Cena " + flight.getPrice() + " €");
 
         flightAnchor.setOnMouseClicked(event -> {

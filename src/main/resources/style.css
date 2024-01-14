@@ -11,16 +11,17 @@
  }
 
 .flightAnchor {
-    -fx-start-margin: 20px;
-    -fx-background-color: -fx-green;
-    -fx-border-radius: 10px;
+    -fx-border-radius: 20px;
     -fx-border-width: 2px;
     -fx-border-color: -fx-dark-blue;
+    -fx-background-radius: 20px;
+    -fx-background-color: -fx-green;
 }
 
 .flightAnchor:hover {
     -fx-background-color: -fx-light-blue;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
 }
 
 .tab-pane .tab-header-area .tab-header-background {
